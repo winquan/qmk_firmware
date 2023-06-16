@@ -31,6 +31,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 100
 
+ 
+#ifdef OLED_ENABLE
+    #define MINUTE_TO_MS                60000  // 60 seconds * 1000 milliseconds
+
+    #define OLED_SCREENSAVER_TIMEOUT    .5 * MINUTE_TO_MS  // .5 minute of no activity to turn on OLED screensaver
+    #define OLED_TIMEOUT                3 * MINUTE_TO_MS  // 2 minutes of no activity to turn OLED off
+#endif
+
 // Underglow
 /*
 #undef RGBLED_NUM
