@@ -24,13 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Select hand configuration */
 
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+// #define MASTER_LEFT
+#define MASTER_RIGHT // We do this as I only have OLED working on the right side
 // #define EE_HANDS
 
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 100
-
  
 #ifdef OLED_ENABLE
     #define MINUTE_TO_MS                60000  // 60 seconds * 1000 milliseconds
