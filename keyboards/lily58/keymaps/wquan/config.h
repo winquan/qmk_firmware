@@ -38,6 +38,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define OLED_TIMEOUT                3 * MINUTE_TO_MS  // 2 minutes of no activity to turn OLED off
 #endif
 
+#undef RGBLED_NUM
+#define RGBLED_NUM 10
+#define RGBLED_SPLIT { 5, 5 }
+#define RGBLIGHT_EFFECT_ALTERNATING
+#define RGBLIGHT_EFFECT_BREATHING
+#define RGBLIGHT_EFFECT_CHRISTMAS
+#define RGBLIGHT_EFFECT_KNIGHT
+#define RGBLIGHT_EFFECT_RAINBOW_MOOD
+#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+#define RGBLIGHT_EFFECT_RGB_TEST
+#define RGBLIGHT_EFFECT_SNAKE
+#define RGBLIGHT_EFFECT_STATIC_GRADIENT
+#define RGBLIGHT_EFFECT_TWINKLE
+
+
 // Underglow
 /*
 #undef RGBLED_NUM

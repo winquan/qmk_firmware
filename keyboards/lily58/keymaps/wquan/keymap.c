@@ -309,8 +309,8 @@ bool oled_task_user(void) {
       }
 
 
-      oled_write_ln(PSTR("WPM: "), false);
-      oled_write(get_u8_str(get_current_wpm(), '0'), false);
+      oled_write_P(PSTR("WPM: "), false);
+      oled_write_ln_P(get_u8_str(get_current_wpm(), ' '), false);
 
       oled_write_ln(read_keylog(), false);
       oled_write_ln(read_keylogs(), false);
@@ -329,7 +329,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_ENABLE
     set_keylog(keycode, record);
 #endif
-    // set_timelog();
+
+      // If console is enabled, it will print the matrix position and status of each key pressed
+#ifdef CONSOLE_ENABLE
+    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+#endif 
   }
   return true;
+}
+
+void keyboard_post_init_user(void) {
+    debug_enable=true;
+    debug_keyboard = true;
+    debug_matrix = true;
 }
