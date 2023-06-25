@@ -29,14 +29,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 #define QUICK_TAP_TERM 0
-#define TAPPING_TERM 100
- 
+#define TAPPING_TERM 200
+
+#define LTO_ENABLE
+
 #ifdef OLED_ENABLE
     #define MINUTE_TO_MS                60000  // 60 seconds * 1000 milliseconds
 
     #define OLED_SCREENSAVER_TIMEOUT    .5 * MINUTE_TO_MS  // .5 minute of no activity to turn on OLED screensaver
     #define OLED_TIMEOUT                3 * MINUTE_TO_MS  // 2 minutes of no activity to turn OLED off
 #endif
+
+#define AUTO_SHIFT_NO_AUTO_REPEAT
+#define AUTO_SHIFT_TIMEOUT 150
+
+#define ONESHOT_TAP_TOGGLE 5  /* Tapping this number of times holds the key until tapped once again. */
+#define ONESHOT_TIMEOUT 5000  /* Time (in ms) before the one shot key is released */
 
 #undef RGBLED_NUM
 #define RGBLED_NUM 10
@@ -52,6 +60,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_EFFECT_STATIC_GRADIENT
 #define RGBLIGHT_EFFECT_TWINKLE
 
+#define RGBLIGHT_DISABLE_KEYCODES
+#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_TWINKLE
+#undef  RGBLIGHT_DEFAULT_HUE
+#define RGBLIGHT_DEFAULT_HUE 190
+#undef RGBLIGHT_DEFAULT_SAT
+#define RGBLIGHT_DEFAULT_SAT 50
 
 // Underglow
 /*
