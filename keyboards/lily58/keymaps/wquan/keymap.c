@@ -199,7 +199,7 @@ OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
+ * |      |DEBUG |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                      |LCTRL | Alt  | LGUI/ Space /       \Enter \     |BackSP| RGB  |  =   |
  *                      |      |      |    /       /         \      \    |      | TOG  |      |
@@ -209,7 +209,7 @@ OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, KC_SCRL, KC_PAUS, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______, _______, _______, _______
   )
 };
@@ -311,8 +311,8 @@ static void render_bongocat_animation(void) {
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees as we're using right as master
+  if (!is_keyboard_master())
+    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
   return rotation;
 }
 
@@ -364,82 +364,67 @@ const char *read_keylogs(void) {
   return keylogs_str;
 }
 
-static char *oled_state = "layer";
-
 bool oled_task_user(void) {
-  if (is_keyboard_master()) {
-
-    if (last_input_activity_elapsed() > OLED_SCREENSAVER_TIMEOUT) {
-      oled_state = "animation";
+  if (!is_keyboard_master()) {
       render_bongocat_animation();
+  }
+  else {
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+
+    switch (get_highest_layer(layer_state)) {
+    case _QWERTY:
+        oled_write_ln_P(PSTR("Default"), false);
+        break;
+    case _RAISE:
+        oled_write_ln_P(PSTR("Raise"), false);
+        break;
+    case _LOWER:
+        oled_write_ln_P(PSTR("Lower"), false);
+        break;
+    case _ADJUST:
+        oled_write_ln_P(PSTR("Adjust"), false);
+        break;
+    default:
+        oled_write_ln_P(PSTR("UNK"), false);
     }
-    else {
 
-      if (!strcmp(oled_state, "layer")) {
-        oled_clear();
-      }
+    // RGB State
+    char* rgblight_is_enabled_str = (rgblight_is_enabled() == true) ? "on" : "off";
+    oled_write_P(PSTR("RGB: "), false);
+    oled_write_P(rgblight_is_enabled_str, false);
 
-      oled_state = "layer";
+    oled_write_P(PSTR(" | "), false);
 
-      // Host Keyboard Layer Status
-      oled_write_P(PSTR("Layer: "), false);
+    // WPM State
+    oled_write_P(PSTR("WPM: "), false);
+    oled_write_ln_P(get_u8_str(get_current_wpm(), ' '), false);
 
-      switch (get_highest_layer(layer_state)) {
-      case _QWERTY:
-          oled_write_ln_P(PSTR("Default"), false);
-          break;
-      case _RAISE:
-          oled_write_ln_P(PSTR("Raise"), false);
-          break;
-      case _LOWER:
-          oled_write_ln_P(PSTR("Lower"), false);
-          break;
-      case _ADJUST:
-          oled_write_ln_P(PSTR("Adjust"), false);
-          break;
-      default:
-          oled_write_ln_P(PSTR("UNK"), false);
-      }
+    oled_write_P(read_keylog(), false);
+    oled_write_P(PSTR(" | "), false);
+    oled_write_ln_P(read_keylogs(), false);
 
-      // RGB State
-      char* rgblight_is_enabled_str = (rgblight_is_enabled() == true) ? "on" : "off";
-      oled_write_P(PSTR("RGB: "), false);
-      oled_write_P(rgblight_is_enabled_str, false);
-
-      oled_write_P(PSTR(" | "), false);
-
-      // WPM State
-      oled_write_P(PSTR("WPM: "), false);
-      oled_write_ln_P(get_u8_str(get_current_wpm(), ' '), false);
-
-      oled_write_P(read_keylog(), false);
-      oled_write_P(PSTR(" | "), false);
-      oled_write_ln_P(read_keylogs(), false);
-
-      // RGB State
-      char rgblight_get_mode_str[4];
-      sprintf(rgblight_get_mode_str, "%d", rgblight_get_mode());
-      char rgblight_get_val_str[4];
-      sprintf(rgblight_get_val_str, "%d", rgblight_get_val());
-      char rgblight_get_speed_str[4];
-      sprintf(rgblight_get_speed_str, "%d", rgblight_get_speed());
+    // RGB State
+    char rgblight_get_mode_str[4];
+    sprintf(rgblight_get_mode_str, "%d", rgblight_get_mode());
+    char rgblight_get_val_str[4];
+    sprintf(rgblight_get_val_str, "%d", rgblight_get_val());
+    char rgblight_get_speed_str[4];
+    sprintf(rgblight_get_speed_str, "%d", rgblight_get_speed());
 
 
-      oled_write_P(PSTR("M: "), false);
-      oled_write_P(rgblight_get_mode_str, false);
-      oled_write_P(PSTR("| B:"), false);
-      oled_write_P(rgblight_get_val_str, false);
-      oled_write_P(PSTR("| S:"), false);
-      oled_write_ln_P(rgblight_get_speed_str, false);
-    }
-    
+    oled_write_P(PSTR("M: "), false);
+    oled_write_P(rgblight_get_mode_str, false);
+    oled_write_P(PSTR("| B:"), false);
+    oled_write_P(rgblight_get_val_str, false);
+    oled_write_P(PSTR("| S:"), false);
+    oled_write_ln_P(rgblight_get_speed_str, false);
   }
 
   return true;
 
 }
 #endif // OLED_ENABLE
-
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
@@ -469,10 +454,16 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
-#ifdef CONSOLE_ENABLE
 void keyboard_post_init_user(void) {
-    debug_enable=true;
-    debug_keyboard = true;
-    debug_matrix = true;
-}
+#ifdef CONSOLE_ENABLE
+  debug_enable=true;
+  debug_keyboard = true;
+  debug_matrix = true;
 #endif
+
+#ifdef RGBLIGHT_ENABLE
+  rgblight_disable_noeeprom(); // Enables RGB, without saving settings
+  rgblight_sethsv_noeeprom(HSV_MAGENTA);
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_TWINKLE);    
+#endif
+}

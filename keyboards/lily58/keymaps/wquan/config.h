@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Select hand configuration */
 
 // #define MASTER_LEFT
-#define MASTER_RIGHT // We do this as I only have OLED working on the right side
+// #define MASTER_RIGHT
 // #define EE_HANDS
 
 #define QUICK_TAP_TERM 0
@@ -61,11 +61,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_EFFECT_TWINKLE
 
 #define RGBLIGHT_DISABLE_KEYCODES
-#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_TWINKLE
-#undef  RGBLIGHT_DEFAULT_HUE
-#define RGBLIGHT_DEFAULT_HUE 190
-#undef RGBLIGHT_DEFAULT_SAT
-#define RGBLIGHT_DEFAULT_SAT 50
 
 // Underglow
 /*
