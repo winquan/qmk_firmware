@@ -144,18 +144,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC,   KC_1, KC_2,   KC_3,   KC_4,  KC_5,                     KC_6,  KC_7,   KC_8,   KC_9,  KC_0,     KC_GRV,
       KC_TAB,   KC_Q, KC_W,   KC_E,   KC_R,  KC_T,                     KC_Y,  KC_U,   KC_I,   KC_O,  KC_P,    KC_MINS,
 OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC_J,   KC_K,   KC_L,KC_SCLN,   KC_QUOT,
-      LOWER,    KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC_M,KC_COMM, KC_DOT,KC_SLSH,     RAISE,
+   TT(LOWER),   KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC_M,KC_COMM, KC_DOT, KC_SLSH,  TT(RAISE),
                         KC_LCTL,KC_LALT,KC_LGUI,KC_SPC,           KC_ENT,KC_BSPC,RGB_TOG,KC_EQL
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |  UP  |      |      |      |
+ * |      |   1  |   2  |   3  |   4  |   5  |                    |      |      |  UP  |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   1  |   2  |   3  |   4  |   5  |-------.    ,-------|      | LEFT | DOWN |RIGHT |      |      |
+ * |      |   6  |   7  |   8  |   9  |   0  |-------.    ,-------|      | LEFT | DOWN |RIGHT |      |      |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |   6  |   7  |   8  |   9  |   0  |-------|    |-------|      |      |      |      |   \  |      |
+ * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |   \  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     |BackSP| RGB  |  =   |
  *                      |      |      |    /       /         \      \    |      | TOG  |      |
@@ -163,10 +163,10 @@ OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC
  */
 [_LOWER] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, XXXXXXX, _______,
-  _______, KC_1,    KC_2,       KC_3,    KC_4,    KC_5,                   XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX, _______,
-  _______, KC_6,    KC_7,       KC_8,    KC_9,    KC_0, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSLS, _______,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
+  _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                   XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, XXXXXXX, _______,
+  _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                   XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSLS, _______,
+                             _______, _______, _______, _______, _______, _______, _______, _______
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -185,7 +185,7 @@ OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC
 
 [_RAISE] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
-  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                         KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
+    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                       KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
   _______, _______, _______, _______, _______, _______,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   _______, _______, _______, _______, _______, _______,   _______, _______, KC_PLUS, KC_LBRC, KC_RBRC, S(KC_9), S(KC_0), _______,
                              _______, _______, _______,   _______, _______, TD(TD_RGB_MODE), TD(TD_RGB_SPI), TD(TD_RGB_VAI)
@@ -195,11 +195,11 @@ OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      | BGT- | BGT+ |      |      |      |                    |      |      |      |      |      |      |
+ * | BGT- | BGT+ |      |      |      |      |                    | PREV |PAUSE | NXT  | MUTE |VOLUP |VOLDWN|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |DEBUG |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
+ * |      | DEBG |EPROM |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                      |LCTRL | Alt  | LGUI/ Space /       \Enter \     |BackSP| RGB  |  =   |
  *                      |      |      |    /       /         \      \    |      | TOG  |      |
@@ -207,9 +207,9 @@ OSM(MOD_LSFT),  KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC
  */
   [_ADJUST] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, KC_SCRL, KC_PAUS, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  KC_SCRL, KC_PAUS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  _______, DB_TOGG,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                              _______, _______, _______, _______, _______, _______, _______, _______
   )
 };
@@ -462,8 +462,9 @@ void keyboard_post_init_user(void) {
 #endif
 
 #ifdef RGBLIGHT_ENABLE
-  rgblight_disable_noeeprom(); // Enables RGB, without saving settings
   rgblight_sethsv_noeeprom(HSV_MAGENTA);
-  rgblight_mode_noeeprom(RGBLIGHT_MODE_TWINKLE);    
+  rgblight_set_speed_noeeprom(255);
+  rgblight_mode_noeeprom(42);
+  rgblight_disable_noeeprom(); // Disable RGB by default
 #endif
 }
