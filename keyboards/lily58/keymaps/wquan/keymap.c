@@ -113,6 +113,18 @@ tap_dance_action_t tap_dance_actions[] = {
 
 };
 
+const uint16_t PROGMEM esc_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM backspace_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM enter_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(esc_combo, KC_ESC),
+    COMBO(tab_combo, KC_TAB),
+    COMBO(backspace_combo, KC_BSPC),
+    COMBO(enter_combo, KC_ENT),
+};
+
 enum layer_number {
   _QWERTY = 0,
   _LOWER,
@@ -131,21 +143,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *     |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  *     | TAB  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
  *     |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- *     |LOWER |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
- *     |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- *     |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RAISE |
+ *     |LShift|   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ *     |------+------+------+------+------+------| LOWER |    | RAISE |------+------+------+------+------+------|
+ *     |      |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |  =   |
  *     `-----------------------------------------/       /     \      \-----------------------------------------'
- *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     |BackSP| RGB  |  =   |
- *                      |      |      |    /       /         \      \    |      | TOG  |      |
+ *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     |BackSP|      | RGB  |
+ *                      |      |      |    /       /         \      \    |      |      | TOG  |
  *                      `----------------''-------'           '------''-----------------------'
  */
 
  [_QWERTY] = LAYOUT(
-      KC_ESC,   KC_1, KC_2,   KC_3,   KC_4,  KC_5,                     KC_6,  KC_7,   KC_8,   KC_9,  KC_0,     KC_GRV,
-      KC_TAB,   KC_Q, KC_W,   KC_E,   KC_R,  KC_T,                     KC_Y,  KC_U,   KC_I,   KC_O,  KC_P,    KC_MINS,
-   TT(LOWER),   KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC_J,   KC_K,   KC_L,KC_SCLN,   KC_QUOT,
-OSM(MOD_LSFT),  KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC_M,KC_COMM, KC_DOT,KC_SLSH,  TT(RAISE),
-                        KC_LCTL,KC_LALT,KC_LGUI,KC_SPC,           KC_ENT,KC_BSPC,RGB_TOG,KC_EQL
+      KC_ESC,   KC_1, KC_2,   KC_3,   KC_4,  KC_5,                     KC_6,  KC_7,   KC_8,   KC_9,   KC_0,  KC_GRV,
+      KC_TAB,   KC_Q, KC_W,   KC_E,   KC_R,  KC_T,                     KC_Y,  KC_U,   KC_I,   KC_O,   KC_P,  KC_MINS,
+     KC_LSFT,   KC_A, KC_S,   KC_D,   KC_F,  KC_G,                     KC_H,  KC_J,   KC_K,   KC_L,KC_SCLN,  KC_QUOT,
+     XXXXXXX,  KC_Z, KC_X,   KC_C,   KC_V,  KC_B, TT(LOWER),TT(RAISE), KC_N,  KC_M,KC_COMM, KC_DOT,KC_SLSH,  KC_EQL,
+                        KC_LCTL,KC_LALT,KC_LGUI,KC_SPC,           KC_ENT,KC_BSPC,XXXXXXX,RGB_TOG
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -154,11 +166,11 @@ OSM(MOD_LSFT),  KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC
  * |      |   1  |   2  |   3  |   4  |   5  |                    |      |      |  UP  |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   6  |   7  |   8  |   9  |   0  |-------.    ,-------|      | LEFT | DOWN |RIGHT |      |      |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |   \  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     |BackSP| RGB  |  =   |
- *                      |      |      |    /       /         \      \    |      | TOG  |      |
+ *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     |BackSP|      | RGB  |
+ *                      |      |      |    /       /         \      \    |      |      | TOG  |
  *                      `----------------''-------'           '------''-----------------------'
  */
 [_LOWER] = LAYOUT(
@@ -175,8 +187,8 @@ OSM(MOD_LSFT),  KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|   +  |   [  |   ]  |   (  |   )  |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |-------|    |-------|      |   [  |   ]  |   (  |   )  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     | RGB   | RGB  | RGB  |
  *                      |      |      |    /       /         \      \    | MODE  | SPD  | BGT  |
@@ -186,8 +198,8 @@ OSM(MOD_LSFT),  KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC
 [_RAISE] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                       KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
-  _______, _______, _______, _______, _______, _______,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  _______, _______, _______, _______, _______, _______,   _______, _______, KC_PLUS, KC_LBRC, KC_RBRC, S(KC_9), S(KC_0), _______,
+  _______, _______, _______, _______, _______, _______,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, _______, _______, _______, _______, _______,   _______, _______, XXXXXXX, KC_LBRC, KC_RBRC, S(KC_9), S(KC_0), XXXXXXX,
                              _______, _______, _______,   _______, _______, TD(TD_RGB_MODE), TD(TD_RGB_SPI), TD(TD_RGB_VAI)
 ),
 
@@ -201,15 +213,15 @@ OSM(MOD_LSFT),  KC_Z, KC_X,   KC_C,   KC_V,  KC_B, KC_LBRC,   KC_RBRC, KC_N,  KC
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
  * |      | DEBG |EPROM |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                      |LCTRL | Alt  | LGUI/ Space /       \Enter \     |BackSP| RGB  |  =   |
- *                      |      |      |    /       /         \      \    |      | TOG  |      |
+ *                      |LCTRL | Alt  |LGUI / Space /       \Enter \     |BackSP|      | RGB  |
+ *                      |      |      |    /       /         \      \    |      |      | TOG  |
  *                      `----------------''-------'           '------''-----------------------'
  */
   [_ADJUST] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   KC_SCRL, KC_PAUS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  _______, DB_TOGG,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  XXXXXXX, DB_TOGG,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______, _______, _______, _______
   )
 };
@@ -392,17 +404,17 @@ bool oled_task_user(void) {
     // RGB State
     char* rgblight_is_enabled_str = (rgblight_is_enabled() == true) ? "on" : "off";
     oled_write_P(PSTR("RGB: "), false);
-    oled_write_P(rgblight_is_enabled_str, false);
+    oled_write(rgblight_is_enabled_str, false);
 
     oled_write_P(PSTR(" | "), false);
 
     // WPM State
     oled_write_P(PSTR("WPM: "), false);
-    oled_write_ln_P(get_u8_str(get_current_wpm(), ' '), false);
+    oled_write_ln(get_u8_str(get_current_wpm(), ' '), false);
 
     oled_write_P(read_keylog(), false);
     oled_write_P(PSTR(" | "), false);
-    oled_write_ln_P(read_keylogs(), false);
+    oled_write_ln(read_keylogs(), false);
 
     // RGB State
     char rgblight_get_mode_str[4];
@@ -413,12 +425,12 @@ bool oled_task_user(void) {
     sprintf(rgblight_get_speed_str, "%d", rgblight_get_speed());
 
 
-    oled_write_P(PSTR("M: "), false);
-    oled_write_P(rgblight_get_mode_str, false);
-    oled_write_P(PSTR("| B:"), false);
-    oled_write_P(rgblight_get_val_str, false);
-    oled_write_P(PSTR("| S:"), false);
-    oled_write_ln_P(rgblight_get_speed_str, false);
+    // oled_write_P(PSTR("M: "), false);
+    // oled_write(rgblight_get_mode_str, false);
+    // oled_write_P(PSTR("| B:"), false);
+    // oled_write(rgblight_get_val_str, false);
+    // oled_write_P(PSTR("| S:"), false);
+    // oled_write_ln(rgblight_get_speed_str, false);
   }
 
   return true;
