@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define AUTO_SHIFT_NO_AUTO_REPEAT
-#define AUTO_SHIFT_TIMEOUT 130
+#define AUTO_SHIFT_TIMEOUT 150
 
 #define COMBO_TERM 25
 
