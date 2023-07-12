@@ -28,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
+#define USB_SUSPEND_WAKEUP_DELAY 5000
+
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 200
 
@@ -41,13 +43,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define AUTO_SHIFT_NO_AUTO_REPEAT
-#define AUTO_SHIFT_TIMEOUT 150
+#define AUTO_SHIFT_TIMEOUT 140
 
 #define COMBO_TERM 25
 
 #undef RGBLED_NUM
-#define RGBLED_NUM 10
-#define RGBLED_SPLIT { 5, 5 }
+#define RGBLED_NUM 22
+#define RGBLED_SPLIT { 11, 11 }
 #define RGBLIGHT_EFFECT_ALTERNATING
 #define RGBLIGHT_EFFECT_BREATHING
 #define RGBLIGHT_EFFECT_CHRISTMAS
@@ -60,6 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_EFFECT_TWINKLE
 
 #define RGBLIGHT_DISABLE_KEYCODES
+#define RGBLIGHT_SLEEP
 
 // Underglow
 /*
